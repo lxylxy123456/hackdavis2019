@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sch_account',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +119,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR + STATIC_URL
+STATIC_DICT = {
+    'sch_account': BASE_DIR + '/sch_account/static',
+}
+
+MEDIA_URL = '/media/'
+MEDIA_DICT = {
+    'document_root': BASE_DIR + MEDIA_URL,
+}
+

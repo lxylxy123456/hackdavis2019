@@ -1,0 +1,39 @@
+<!DOCTPYE html> 
+<html>
+<head>
+  <title>Login</title>
+  <script src="/static/js/jquery-1.11.2.js"></script>
+  <script src="/static/js/obj2json.js"></script>
+</head>
+<body>
+  <form action="/login/" method="POST" onsubmit="event.preventDefault()">
+    {% csrf_token %}
+    <input id="username" type="name" name="username" />
+    <input id="password" type="password" name="password" />
+    <input id="submit" type="submit" value="Submit" />
+  </form>
+  <script>
+$("#submit").on("click", function(e) {
+	$.ajax({
+		url: "/login/", 
+		type: "POST",
+		data: {
+			"username": $("#username")[0].value,
+			"password": $("#password")[0].value,
+		},
+		dataType: "json",
+		beforeSend: function(xhr, settings) {
+			var csrftoken = getCookie('csrftoken');
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			}
+		},
+	}).done(function(msg){
+		alert(msg['message']);
+		if (msg['redirect'])
+			window.location = msg['redirect'];
+	});
+});
+  </script>
+</body>
+</html>
