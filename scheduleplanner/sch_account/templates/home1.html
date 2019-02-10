@@ -43,7 +43,7 @@
     <h1 style="color: white" align="center">Start building your schedule!</h1>
  </div>
 
-<div class="container">
+<div role="tabpanel">
   <ul class="nav nav-tabs">
     {% for yi, yy in Y4 %}
       <li class="nav-item {% ifequal yi 0 %}active{% endifequal %}">
@@ -52,15 +52,6 @@
     {% endfor %}
   </ul>
 
-<!--
-<select class="jkl chosen" style="width:50px;" selected="ECS36C">
-  <option value="" selected>Please Choose...</option>
-  {% for i in class_list %}
-    <option value="{{ i }}">{{ i }}</option>
-  {% endfor %}
-</select>
--->
-</div>
   <div class="tab-content">
     {% for yi, yy in Y4 %}
     <div id="year_{{ yi }}" class="tab-pane fade in {% ifequal yi 0 %}active{% endifequal %}">
@@ -86,22 +77,13 @@
         </div>
       </div>
       {% endfor %}
-      <!--
-      <div class="col-md-4">
-        <div class="panel panel-danger">
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="panel panel-danger">
-        </div>
-      </div>
-      -->
     </div>
     {% endfor %}
     <div id="form">
-    <div class="form-group">
-      <button onclick="submit_clicked();" type="submit" id="submit" class="btn btn-default">
-	Submit</button>
+      <div class="form-group">
+        <button onclick="submit_clicked();" type="submit" id="submit" class="btn btn-default">
+	  Submit</button>
+      </div>
     </div>
   </div>
 </div>
@@ -130,7 +112,7 @@ for (var i = 0; i < class_list.length; i++) {
 }
 */
 
-$(".chosen").chosen( { width: '75%' } );
+$(".chosen").chosen( { width: '100%' } );
 
 function pack_form() {
 	data = {}

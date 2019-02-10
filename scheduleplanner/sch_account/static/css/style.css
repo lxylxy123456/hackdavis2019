@@ -31,11 +31,9 @@ h1 {
 }
 
 .chosen-container.chosen-container-single {
-    width: 300px !important;
 }
 
 .chosen-container.chosen-container-single .chosen-with-drop .chosen-container-active{
-    width: 300px !important;
 }
 
 .chosen-container {
