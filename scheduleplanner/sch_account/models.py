@@ -24,7 +24,7 @@ ClassInfo = {
 	'ECS132': {'desc': 'Probability and Statistical Modeling for Computer Science', 'preq': ['ECS36B', 'ECS50', 'MAT21C', 'MAT22A']},
 	'ECS120': {'desc': 'Theory of Computation', 'preq': ['ECS20']},
 	'ECS122A': {'desc': 'Algorithm Design and Analysis', 'preq': ['ECS20', 'ECS36C']},
-	'ECS122B': {'desc': 'Algorithm Design and Analysis', 'preq': ['ECS122A', 'ECS36C']},
+#	'ECS122B': {'desc': 'Algorithm Design and Analysis', 'preq': ['ECS122A', 'ECS36C']},
 	'ECS140A': {'desc': 'Programming Languages', 'preq': ['ECS50', 'ECS36C', 'ECS20']},
 	'ECS150': {'desc': 'Operating Systems and System Programming', 'preq': ['ECS36C', 'ECS154A']},
 	'ECS154A': {'desc': 'Computer Architecture', 'preq': ['ECS50']},

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect as Http302
 from django.shortcuts import render, render_to_response
 from django.template.context_processors import csrf
+from django.utils.safestring import mark_safe
 
 from django.contrib import auth
 
@@ -31,6 +32,8 @@ def home(request):
 	if not request.user.is_authenticated() :
 		return Snap.redirect('/login/')
 	dict_render = Snap.record(request)
+	dict_render['class_list'] = mark_safe(json.dumps(list(ClassInfo)))
+	dict_render['classes'] = mark_safe(json.dumps(ClassInfo))
 	return Snap.render('home.html', dict_render)
 
 def login(request) :
