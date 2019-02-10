@@ -34,7 +34,7 @@ function Ajax(url, type, data, banner) {
 		},
 	}).done(function(msg){
 		id = 'banner-message-' + Date.now()
-		banner.prepend(create_banner(msg['stat'], msg['msg'], id)
+		banner.prepend(create_banner(msg['stat'], msg['msg'], id))
 		$("#" + id).fadeOut(3000)
 		if (msg['redirect'])
 			setTimeout("window.location = \"" + msg['redirect'] + "\";", 1000);
