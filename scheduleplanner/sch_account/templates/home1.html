@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/static/js/obj2json.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
 <script src="/static/js/choosen.js"></script>
@@ -41,7 +42,7 @@
 </nav>
 
 <section class="intro">  
-  <div class="content">
+  <div class="content {% ifequal yi 0 %}active{% endifequal %}">
     <h1 style="color: white" align="center">Start building your schedule!</h1>
  </div>
 
@@ -52,6 +53,15 @@
     {% endfor %}
   </ul>
 
+<!--
+<select class="jkl chosen" style="width:50px;" selected="ECS36C">
+  <option value="" selected>Please Choose...</option>
+  {% for i in class_list %}
+    <option value="{{ i }}">{{ i }}</option>
+  {% endfor %}
+</select>
+-->
+</div>
   <div class="tab-content">
     {% for yi, yy in Y4 %}
     <div id="year_{{ yi }}" class="tab-pane fade in active">
@@ -64,10 +74,10 @@
             </h3>
             {% for l in L5 %}
               <div>
-                <select class="sel_{{ yi }}_{{ qi }}_{{ l }} chosen" style="width:50px;" >
-                  <option value="" disabled selected hidden>Please Choose...</option>
+                <select class="sel_{{ yi }}_{{ qi }}_{{ l }} chosen" style="width:50px;" selected="ECS36C">
+                  <option value="" selected hidden>Please Choose...</option>
                   {% for i in class_list %}
-                    <option value="{{ i }}">{{ i }}</option>
+                    <option value="{{ i.0 }}">{{ i.1 }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -89,6 +99,11 @@
       -->
     </div>
     {% endfor %}
+    <div id="form">
+    </div>
+    <button onclick="submit_clicked();">
+    SUBMIT
+    </button>
   </div>
 </div>
   
@@ -99,7 +114,9 @@
 <script>
 class_list = {{ json_class_list }};
 classes = {{ json_classes }};
+uc = {{ userclass }};
 
+/*
 for (var i = 0; i < class_list.length; i++) {
 	$('#rect_' + class_list[i]).on("mouseover", function (){
 		this.style.setProperty("fill", "#00000a")
@@ -108,10 +125,48 @@ for (var i = 0; i < class_list.length; i++) {
 		this.style.removeProperty('fill')
 	});
 }
+*/
 
 $(".chosen").chosen( { width: '75%' } );
 
-// $(".sel_1").chosen()[0].value
+function pack_form() {
+	data = {}
+	for (var y = 0; y < 4; y++)
+		for (var q = 0; q < 3; q++)
+			for (var l = 0; l < 5; l++) {
+				obj = $(".sel_" + y + "_" + q + "_" + l);
+				data[y + "_" + q + "_" + l] = obj.val()
+			}
+	return data
+}
+
+function submit_clicked() {
+	Ajax("/", "POST", pack_form(), $("#form"));
+}
+
+function uc_find(index, value) {
+	for (i in uc)
+		if (uc[i][index] == value)
+			return uc[i];
+}
+
+for (var y = 0; y < 4; y++)
+	for (var q = 0; q < 3; q++)
+		for (var l = 0; l < 5; l++) {
+			obj = $(".sel_" + y + "_" + q + "_" + l);
+			found = uc_find(1, y + "_" + q + "_" + l)
+			if (found)
+				obj.val(found[0])
+			else
+				obj.val("")
+			obj.trigger("chosen:updated")
+		}
+
+for (i in uc)
+	$('#rect_' + uc[i][0])[0].style.setProperty("fill", "#00ff00")
+
+// $(".jkl").val("ECS36C")
+// $(".jkl").trigger("chosen:updated");
 </script>
 
 </section>
