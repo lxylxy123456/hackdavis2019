@@ -1,24 +1,26 @@
 <!DOCTPYE html> 
 <html>
 <head>
-  <title>Login</title>
+  <title>Register</title>
   <script src="/static/js/jquery-1.11.2.js"></script>
   <script src="/static/js/obj2json.js"></script>
 </head>
 <body>
   <p><a href="/">Home</a></p>
   <p>User: {{ request.user }}</p>
-  <form action="/login/" method="POST" onsubmit="event.preventDefault()">
+  <form action="/register/" method="POST" onsubmit="event.preventDefault()">
     {% csrf_token %}
     <input id="username" type="name" name="username" />
     <input id="password" type="password" name="password" />
+    <input id="password2" type="password" name="password2" />
     <input id="submit" type="submit" value="Submit" />
   </form>
   <script>
 $("#submit").on("click", function(e) {
-	Ajax("/login/", "POST", {
+	Ajax(this.action, "POST", {
 		"username": $("#username")[0].value,
 		"password": $("#password")[0].value,
+		"password2": $("#password2")[0].value,
 	});
 });
   </script>

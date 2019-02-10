@@ -30,7 +30,7 @@ function Ajax(url, type, data) {
 			}
 		},
 	}).done(function(msg){
-		alert(msg['message']);
+		alert(msg['msg']);
 		if (msg['redirect'])
 			setTimeout("window.location = \"" + msg['redirect'] + "\";", 1000);
 		if (msg['reload'])
