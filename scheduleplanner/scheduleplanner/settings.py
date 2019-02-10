@@ -25,11 +25,10 @@ SECRET_KEY = 'bmmp88q0stawx^i14--h_-l^b#w00rmmv402=65i5v@orr8e^z'
 # SECURITY WARNING: don't run with debug turned on in production!
 if 'SERVER' in socket.gethostname() :
 	DEBUG = False
+	ALLOWED_HOSTS = ['*']
 else :
 	DEBUG = True
-
-ALLOWED_HOSTS = ['savemyschedule.tk.', 'www.savemyschedule.tk.']
-
+	ALLOWED_HOSTS = ['savemyschedule.tk', 'www.savemyschedule.tk']
 
 # Application definition
 
