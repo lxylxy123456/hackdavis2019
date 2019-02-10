@@ -29,18 +29,10 @@
         <button stype="button" class="btn btn-default">
         <span class="glyphicon glyphicon-search"></span> Search
         </button>
-	<style type="text/css">
-        li{
-          float:left;
-          display:block;
- 	  padding:20px 50px;
-          color:#ffffff;
-        }
-        </style>
         <!--<li><img src="#" style = "text-align: center"></li>-->
-        <li>{{ user.username }}</li>
+        <li><span style = "color:white">{{ user.username }}</span></li>
         <!--<li>Major</li>-->
-        <li>{{ useraccount.year }}</li>
+        <li><span style = "color:white">{{ useraccount.year }}</span></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/logout/"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
