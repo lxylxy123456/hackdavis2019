@@ -2,24 +2,72 @@
 <html>
 <head>
   <title>Login</title>
-  <script src="/static/js/jquery-1.11.2.js"></script>
   <script src="/static/js/obj2json.js"></script>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  div.jumbotron{
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 90%;
+  border-bottom: 1px solid #111111;
+  border-top: 2px solid #111111;
+  text-align: left;
+  }
+  
+  </style>
 </head>
 <body>
-  <p><a href="/register/">Register</a></p>
-  <form id="form" action="/login/" method="POST" onsubmit="event.preventDefault()">
-    {% csrf_token %}
-    <input id="username" type="name" name="username" />
-    <input id="password" type="password" name="password" />
-    <input id="submit" type="submit" value="Submit" />
+  <p><a href="/">Home</a></p>
+
+<div class="jumbotron" >
+  <h1 style="text-align: center; color: #0B2161;">Scheduler Planner</h1>
+  <p style="text-align: center; color: #0B2161;">For UC Davis Computer Science Major</p> 
+</div>
+
+
+<div class="container">
+  <h2 style="text-align: center; color: rgb(100,0,0);">Login</h2>
+  <form class="form-horizontal" style="text-align: center" action="/login/" method="POST" onsubmit="event.preventDefault()">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-1 col-sm-10">
+        <div class="checkbox">
+          <label><input type="checkbox" name="remember"> Remember me</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-1 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
   </form>
+</div>
+
   <script>
 $("#submit").on("click", function(e) {
-	Ajax("/login/", "POST", {
-		"username": $("#username")[0].value,
-		"password": $("#password")[0].value,
-	}, $("#form"));
+  Ajax("/login/", "POST", {
+    "username": $("#username")[0].value,
+    "password": $("#password")[0].value,
+  });
 });
   </script>
+
 </body>
 </html>
