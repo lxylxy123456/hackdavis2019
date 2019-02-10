@@ -18,7 +18,7 @@ class Snap :
 		dict_render['stat'] = 'success'
 		return Snap.json(dict_render)
 	def error(dict_render) :
-		dict_render['stat'] = 'error'
+		dict_render['stat'] = 'warning'
 		return Snap.json(dict_render)
 	def json(dict_render) :
 		return HttpResponse(json.dumps(dict_render))

@@ -18,7 +18,11 @@ function csrfSafeMethod(method) {
 	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 function create_banner(type, msg, id) {
-	return ("<p id=\"" + id + "\">" + type + ": " + msg + "</p>")
+	upper = type.charAt(0).toUpperCase() + type.substr(1);
+	return ('  <div id="' + id + '" class="alert alert-' + type + ' alert-dismissible fade in" align="center">\
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>\
+    <strong>' + upper + '!</strong> ' + msg + '\
+  </div>')
 }
 function Ajax(url, type, data, banner) {
 	$.ajax({
