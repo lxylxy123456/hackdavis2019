@@ -32,6 +32,7 @@
 <div class="container">
   <h2 style="text-align: center; color: rgb(100,0,0);">Login</h2>
   <form id="form" class="form-horizontal" style="text-align: center" action="/login/" method="POST" onsubmit="event.preventDefault()">
+    {% csrf_token %}
     <div class="form-group">
       <label class="control-label col-sm-2" for="email">Email:</label>
       <div class="col-sm-10">
