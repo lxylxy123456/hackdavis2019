@@ -31,10 +31,13 @@ class Snap :
 def home(request):
 	if not request.user.is_authenticated() :
 		return Snap.redirect('/login/')
-	dict_render = Snap.record(request)
-	dict_render['class_list'] = mark_safe(json.dumps(list(ClassInfo)))
-	dict_render['classes'] = mark_safe(json.dumps(ClassInfo))
-	return Snap.render('home.html', dict_render)
+	if request.method == 'POST' :
+		0/0
+	else :
+		dict_render = Snap.record(request)
+		dict_render['class_list'] = mark_safe(json.dumps(list(ClassInfo)))
+		dict_render['classes'] = mark_safe(json.dumps(ClassInfo))
+		return Snap.render('home1.html', dict_render)
 
 def login(request) :
 	dict_render = Snap.record(request)
