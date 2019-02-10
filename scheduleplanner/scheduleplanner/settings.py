@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os
+import os, socket
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,10 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'bmmp88q0stawx^i14--h_-l^b#w00rmmv402=65i5v@orr8e^z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
+if 'SERVER' in socket.gethostname() :
+	DEBUG = False
+	ALLOWED_HOSTS = ['savemyschedule.tk', 'www.savemyschedule.tk']
+else :
+	DEBUG = True
+	ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -74,12 +76,25 @@ WSGI_APPLICATION = 'scheduleplanner.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+if 'SERVER' not in socket.gethostname() :
+	DATABASES = {
+		'default': {
+		    'ENGINE': 'django.db.backends.sqlite3',
+		    'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+		}
+	}
+else :
+	DATABASES = {
+		'default': {
+			'ENGINE': 'django.db.backends.postgresql_psycopg2',
+			'NAME': 'scheduleplanner',
+			'USER': 'postgres',
+			'PASSWORD': open(os.path.join(os.path.dirname(__file__), 
+											'db_passwd.txt')).read(),
+			'HOST': '127.0.0.1',
+			'PORT': '5432',
+		}
+	}
 
 
 # Password validation

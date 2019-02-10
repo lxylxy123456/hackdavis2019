@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect as Http302
 from django.shortcuts import render, render_to_response
 from django.template.context_processors import csrf
+from django.utils.safestring import mark_safe
 
 from django.contrib import auth
 
@@ -18,7 +19,7 @@ class Snap :
 		dict_render['stat'] = 'success'
 		return Snap.json(dict_render)
 	def error(dict_render) :
-		dict_render['stat'] = 'error'
+		dict_render['stat'] = 'warning'
 		return Snap.json(dict_render)
 	def json(dict_render) :
 		return HttpResponse(json.dumps(dict_render))
@@ -30,8 +31,41 @@ class Snap :
 def home(request):
 	if not request.user.is_authenticated() :
 		return Snap.redirect('/login/')
-	dict_render = Snap.record(request)
-	return Snap.render('home.html', dict_render)
+	if request.method == 'POST' :
+		data = {}
+		for y in range(4) :
+			for q in range(3) :
+				for l in range(5) :
+					cname = request.POST['%s_%s_%s' % (y, q, l)]
+					if cname :
+						if cname in data :
+							return Snap.error({'msg': 'You are taking %s multip'
+														'le times' % cname})
+						data[cname] = y, q, l
+		UserClass.objects.filter(uid=request.user.id).update(rel="")
+		for i in data :
+			qry = UserClass.objects.filter(uid=request.user.id, cid=i)
+			if qry.exists() :
+				qry.update(rel='%s_%s_%s' % data[i])
+			else :
+				UserClass(uid=request.user.id, cid=i, rel='%s_%s_%s' % data[i]).save()
+		return Snap.success({'msg': 'class saved successfully', 'reload': 't'})
+	else :
+		dict_render = Snap.record(request)
+		print(list(ClassInfo))
+		dict_render['class_list'] = list(map(lambda x: (x, x[:3] + ' ' + x[3:]), ClassInfo))
+		dict_render['classes'] = ClassInfo
+		dict_render['Y4'] = list(zip(range(4), ['First', 'Second', 'Third', 'Forth']))
+		dict_render['Q3'] = list(zip(range(3), ['Fall', 'Winter', 'Sprint']))
+		dict_render['L5'] = range(5)
+		dict_render['json_class_list'] = mark_safe(json.dumps(list(ClassInfo)))
+		dict_render['json_classes'] = mark_safe(json.dumps(ClassInfo))
+		userclass = []
+		for uc in UserClass.objects.filter(uid=request.user.id) :
+			if uc.rel :
+				userclass.append([uc.cid, uc.rel])
+		dict_render['userclass'] = mark_safe(json.dumps(userclass))
+		return Snap.render('home1.html', dict_render)
 
 def login(request) :
 	dict_render = Snap.record(request)

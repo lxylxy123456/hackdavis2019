@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Schedule Planner</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/static/js/obj2json.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script src="/static/js/choosen.js"></script>
+</head>
+<body >
+  
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Schedule Planner</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <button stype="button" class="btn btn-default">
+        <span class="glyphicon glyphicon-search"></span> Search
+        </button>
+        <li><img src="#" style = "text-align: center"></li>
+        <li><a href="#">Username</a></li>
+        <li><a href="#">Major</a></li>
+        <li><a href="#">Year</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout/"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="intro">  
+  <div class="content {% ifequal yi 0 %}active{% endifequal %}">
+    <h1 style="color: white" align="center">Start building your schedule!</h1>
+ </div>
+
+<div class="container">
+  <ul class="nav nav-tabs">
+    {% for yi, yy in Y4 %}
+      <li><a data-toggle="tab" href="#year_{{ yi }}">{{ yy }} Year</a></li>
+    {% endfor %}
+  </ul>
+
+<!--
+<select class="jkl chosen" style="width:50px;" selected="ECS36C">
+  <option value="" selected>Please Choose...</option>
+  {% for i in class_list %}
+    <option value="{{ i }}">{{ i }}</option>
+  {% endfor %}
+</select>
+-->
+</div>
+  <div class="tab-content">
+    {% for yi, yy in Y4 %}
+    <div id="year_{{ yi }}" class="tab-pane fade in active">
+      {% for qi, qq in Q3 %}
+      <div class="col-md-4">
+        <div class="panel panel-danger">
+          <div class="panel-body">
+            <h3 class="text-center" style="margin: 10px;">
+              <strong>{{ qq }} Quarter</strong>
+            </h3>
+            {% for l in L5 %}
+              <div>
+                <select class="sel_{{ yi }}_{{ qi }}_{{ l }} chosen" style="width:50px;" selected="ECS36C">
+                  <option value="" selected hidden>Please Choose...</option>
+                  {% for i in class_list %}
+                    <option value="{{ i.0 }}">{{ i.1 }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <br />
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <!--
+      <div class="col-md-4">
+        <div class="panel panel-danger">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-danger">
+        </div>
+      </div>
+      -->
+    </div>
+    {% endfor %}
+    <div id="form">
+    </div>
+    <button onclick="submit_clicked();">
+    SUBMIT
+    </button>
+  </div>
+</div>
+  
+<p style="page-break-before: always">
+
+{% include "chart.svg" %}
+
+<script>
+class_list = {{ json_class_list }};
+classes = {{ json_classes }};
+uc = {{ userclass }};
+
+/*
+for (var i = 0; i < class_list.length; i++) {
+	$('#rect_' + class_list[i]).on("mouseover", function (){
+		this.style.setProperty("fill", "#00000a")
+	});
+	$('#rect_' + class_list[i]).on("mouseout", function (){
+		this.style.removeProperty('fill')
+	});
+}
+*/
+
+$(".chosen").chosen( { width: '75%' } );
+
+function pack_form() {
+	data = {}
+	for (var y = 0; y < 4; y++)
+		for (var q = 0; q < 3; q++)
+			for (var l = 0; l < 5; l++) {
+				obj = $(".sel_" + y + "_" + q + "_" + l);
+				data[y + "_" + q + "_" + l] = obj.val()
+			}
+	return data
+}
+
+function submit_clicked() {
+	Ajax("/", "POST", pack_form(), $("#form"));
+}
+
+function uc_find(index, value) {
+	for (i in uc)
+		if (uc[i][index] == value)
+			return uc[i];
+}
+
+for (var y = 0; y < 4; y++)
+	for (var q = 0; q < 3; q++)
+		for (var l = 0; l < 5; l++) {
+			obj = $(".sel_" + y + "_" + q + "_" + l);
+			found = uc_find(1, y + "_" + q + "_" + l)
+			if (found)
+				obj.val(found[0])
+			else
+				obj.val("")
+			obj.trigger("chosen:updated")
+		}
+
+for (i in uc)
+	$('#rect_' + uc[i][0])[0].style.setProperty("fill", "#00ff00")
+
+// $(".jkl").val("ECS36C")
+// $(".jkl").trigger("chosen:updated");
+</script>
+
+</section>
+
+</body>
+</html>

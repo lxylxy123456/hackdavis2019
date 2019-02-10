@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Welcome</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -31,11 +31,12 @@
         <li><a href="#">Year</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
+        <li><a href="/logout/"><span class="glyphicon glyphicon-user"></span> Logout</a></li>
       </ul>
     </div>
   </div>
 </nav>
+<<<<<<< HEAD
   <div class="container">
   <ul class="nav nav-pills">
     <li class="dropdown">
@@ -94,14 +95,59 @@
       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
     </div>
     <div id="menu3" class="tab-pane fade">
+=======
+
+
+<div class="container">
+  <h2>Dynamic Tabs</h2>
+  <p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
+
+  <ul class="nav nav-tabs">
+    <li><a data-toggle="tab" href="#FirstYear">First Year</a></li>
+    <li><a data-toggle="tab" href="#SecondYear">Second Year</a></li>
+    <li><a data-toggle="tab" href="#ThirdYear">Third Year</a></li>
+    <li><a data-toggle="tab" href="#ForthYear">Forth Year</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="FirstYear" class="tab-pane fade">
+      <h3>First Year</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="SecondYear" class="tab-pane fade">
+      <h3>Second Year</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="ThirdYear" class="tab-pane fade">
+      <h3>Third Year</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+    <div id="ForthYear" class="tab-pane fade">
+>>>>>>> 80c448c3f61f04ab0dbd50902fdc7480333ee137
       <h3>Forth Year</h3>
       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
     </div>
   </div>
 </div>
+  
+<p style="page-break-before: always">
 
+{% include "chart.svg" %}
 
+<script>
+class_list = {{ class_list }};
+classes = {{ classes }};
 
+for (var i = 0; i < class_list.length; i++) {
+	$('#g_' + class_list[i]).on("mouseover", function (){
+		this.children[0].style.setProperty("fill", "#00000a")
+	});
+	$('#g_' + class_list[i]).on("mouseout", function (){
+		this.children[0].style.removeProperty('fill')
+	});
+	
+}
+</script>
 
 </body>
 </html>
