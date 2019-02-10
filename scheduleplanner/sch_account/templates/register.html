@@ -2,26 +2,76 @@
 <html>
 <head>
   <title>Register</title>
-  <script src="/static/js/jquery-1.11.2.js"></script>
   <script src="/static/js/obj2json.js"></script>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <style type="text/css">
+  div.jumbotron{
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 90%;
+  border-bottom: 1px solid #111111;
+  border-top: 2px solid #111111;
+  text-align: left;
+  }
+  
+  </style>
 </head>
 <body>
-  <p><a href="/login/">Login</a></p>
-  <form id="form" action="/register/" method="POST" onsubmit="event.preventDefault()">
-    {% csrf_token %}
-    <input id="username" type="name" name="username" />
-    <input id="password" type="password" name="password" />
-    <input id="password2" type="password" name="password2" />
-    <input id="submit" type="submit" value="Submit" />
+
+<div class="jumbotron" >
+  <h1 style="text-align: center; color: #0B2161;">Scheduler Planner</h1>
+  <p style="text-align: center; color: #0B2161;">For UC Davis Computer Science Major</p> 
+</div>
+
+
+<div class="container">
+  <h2 style="text-align: center; color: rgb(100,0,0);">Register</h2>
+  <form id="form" class="form-horizontal" style="text-align: center" action="/register/" method="POST" onsubmit="event.preventDefault()">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="email">Email:</label>
+      <div class="col-sm-10">
+        <input type="email" class="form-control" id="username" placeholder="Enter email" name="email">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Password:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="pwd">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd" ></label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="retypepassword" placeholder="Enter password again" name="pwd">
+      </div>
+    </div>
+    <div class="form-group">        
+      <button type="submit" id="submit" class="btn btn-default">Submit</button>
+    </div>
   </form>
+  <div class="signup">
+  <br /> <br /> 
+  <p align="right"> Have an account?
+  <a href="/register/" type="button" class="btn btn-link">Login</a>
+</p>
+</div>
+</div>
+
+
   <script>
 $("#submit").on("click", function(e) {
-	Ajax(this.action, "POST", {
-		"username": $("#username")[0].value,
-		"password": $("#password")[0].value,
-		"password2": $("#password2")[0].value,
-	}, $("#form"));
+  Ajax("/register/", "POST", {
+    "username": $("#username")[0].value,
+    "password": $("#password")[0].value,
+    "password2": $("#retypepassword")[0].value,
+  }, $("#form"));
 });
   </script>
+
 </body>
 </html>
