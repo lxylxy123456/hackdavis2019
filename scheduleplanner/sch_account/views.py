@@ -35,8 +35,14 @@ def home(request):
 		0/0
 	else :
 		dict_render = Snap.record(request)
-		dict_render['class_list'] = mark_safe(json.dumps(list(ClassInfo)))
-		dict_render['classes'] = mark_safe(json.dumps(ClassInfo))
+		print(list(ClassInfo))
+		dict_render['class_list'] = list(ClassInfo)
+		dict_render['classes'] = ClassInfo
+		dict_render['Y4'] = list(zip(range(4), ['First', 'Second', 'Third', 'Forth']))
+		dict_render['Q3'] = list(zip(range(3), ['Fall', 'Winter', 'Sprint']))
+		dict_render['L5'] = range(5)
+		dict_render['json_class_list'] = mark_safe(json.dumps(list(ClassInfo)))
+		dict_render['json_classes'] = mark_safe(json.dumps(ClassInfo))
 		return Snap.render('home1.html', dict_render)
 
 def login(request) :

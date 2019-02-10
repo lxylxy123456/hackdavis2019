@@ -47,48 +47,37 @@
 
 <div class="container">
   <ul class="nav nav-tabs">
-    <li><a data-toggle="tab" href="#FirstYear">First Year</a></li>
-    <li><a data-toggle="tab" href="#SecondYear">Second Year</a></li>
-    <li><a data-toggle="tab" href="#ThirdYear">Third Year</a></li>
-    <li><a data-toggle="tab" href="#ForthYear">Forth Year</a></li>
+    {% for yi, yy in Y4 %}
+      <li><a data-toggle="tab" href="#year_{{ yi }}">{{ yy }} Year</a></li>
+    {% endfor %}
   </ul>
 
   <div class="tab-content">
-    <div id="FirstYear" class="tab-pane fade in active">
+    {% for yi, yy in Y4 %}
+    <div id="year_{{ yi }}" class="tab-pane fade in active">
+      {% for qi, qq in Q3 %}
       <div class="col-md-4">
         <div class="panel panel-danger">
           <div class="panel-body">
             <h3 class="text-center" style="margin: 10px;">
-              <strong>Fall Quarter</strong>
+              <strong>{{ qq }} Quarter</strong>
             </h3>
-
+            {% for l in L5 %}
               <div>
-              <select class="chosen" style="width:50px;" >
-              <option value="" disabled selected hidden>Please Choose...</option>
-              <!-- More options here -->
-              <option>ECS 36A</option>
-              <option>ECS 36B</option>
-              <option>ECS 36C</option>
-              </select>
+                <select class="sel_{{ yi }}_{{ qi }}_{{ l }} chosen" style="width:50px;" >
+                  <option value="" disabled selected hidden>Please Choose...</option>
+                  {% for i in class_list %}
+                    <option value="{{ i }}">{{ i }}</option>
+                  {% endfor %}
+                </select>
               </div>
-<br />
-              <div>
-              <select class="chosen" style="width:50px;" >
-              <option value="" disabled selected hidden>Please Choose...</option>
-              <!-- More options here -->
-              <option>ECS 36A</option>
-              <option>ECS 36B</option>
-              <option>ECS 36C</option>
-              </select>
-              </div>
-<br />
-        <!-- More boxes here -->
-              <script type="text/javascript">
-              $(".chosen").chosen( { width: '75%' } );
-              </script>
+              <br />
+            {% endfor %}
           </div>
         </div>
       </div>
+      {% endfor %}
+      <!--
       <div class="col-md-4">
         <div class="panel panel-danger">
         </div>
@@ -97,19 +86,9 @@
         <div class="panel panel-danger">
         </div>
       </div>
+      -->
     </div>
-    <div id="SecondYear" class="tab-pane fade">
-      <h3>Second Year</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-    </div>
-    <div id="ThirdYear" class="tab-pane fade">
-      <h3>Third Year</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div>
-    <div id="ForthYear" class="tab-pane fade">
-      <h3>Forth Year</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
-    </div>
+    {% endfor %}
   </div>
 </div>
   
@@ -118,8 +97,8 @@
 {% include "chart.svg" %}
 
 <script>
-class_list = {{ class_list }};
-classes = {{ classes }};
+class_list = {{ json_class_list }};
+classes = {{ json_classes }};
 
 for (var i = 0; i < class_list.length; i++) {
 	$('#rect_' + class_list[i]).on("mouseover", function (){
@@ -128,8 +107,11 @@ for (var i = 0; i < class_list.length; i++) {
 	$('#rect_' + class_list[i]).on("mouseout", function (){
 		this.style.removeProperty('fill')
 	});
-	
 }
+
+$(".chosen").chosen( { width: '75%' } );
+
+// $(".sel_1").chosen()[0].value
 </script>
 
 </section>
