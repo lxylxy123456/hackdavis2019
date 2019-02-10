@@ -56,7 +56,7 @@ def home(request):
 		dict_render['class_list'] = list(map(lambda x: (x, x[:3] + ' ' + x[3:]), ClassInfo))
 		dict_render['classes'] = ClassInfo
 		dict_render['Y4'] = list(zip(range(4), ['First', 'Second', 'Third', 'Forth']))
-		dict_render['Q3'] = list(zip(range(3), ['Fall', 'Winter', 'Sprint']))
+		dict_render['Q3'] = list(zip(range(3), ['Fall', 'Winter', 'Spring']))
 		dict_render['L5'] = range(5)
 		dict_render['json_class_list'] = mark_safe(json.dumps(list(ClassInfo)))
 		dict_render['json_classes'] = mark_safe(json.dumps(ClassInfo))

@@ -49,7 +49,9 @@
 <div class="container">
   <ul class="nav nav-tabs">
     {% for yi, yy in Y4 %}
-      <li><a data-toggle="tab" href="#year_{{ yi }}">{{ yy }} Year</a></li>
+      <li class="nav-item">
+        <a class="nav-link {% ifequal yi 0 %}active{% endifequal %}" data-toggle="tab" href="#year_{{ yi }}">{{ yy }} Year</a>
+      </li>
     {% endfor %}
   </ul>
 
@@ -64,7 +66,7 @@
 </div>
   <div class="tab-content">
     {% for yi, yy in Y4 %}
-    <div id="year_{{ yi }}" class="tab-pane fade in active">
+    <div id="year_{{ yi }}" class="tab-pane fade in {% ifequal yi 0 %}active{% endifequal %}">
       {% for qi, qq in Q3 %}
       <div class="col-md-4">
         <div class="panel panel-danger">
