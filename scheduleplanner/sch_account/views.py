@@ -102,10 +102,16 @@ def register(request) :
 			return Snap.error({'msg': 'Passwords do not match.'})
 		if User.objects.filter(username=username).exists() :
 			return Snap.error({'msg': 'Username already used.'})
+		try :
+			year = int(request.POST['year'])
+			if year not in range(1, 7) :
+				raise ValueError
+		except ValueError :
+			return Snap.error({'msg': 'Invalid year.'})
 		u = User(username=username)
 		u.set_password(password)
 		u.save()
-		ua = UserAccount(basic=u, major='0/0', year=0)
+		ua = UserAccount(basic=u, major='0/0', year=year)
 		ua.save()
 		user = auth.authenticate(username=username, password=password)
 		auth.login(request, user)

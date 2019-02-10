@@ -49,8 +49,8 @@
 <div class="container">
   <ul class="nav nav-tabs">
     {% for yi, yy in Y4 %}
-      <li class="nav-item">
-        <a class="nav-link {% ifequal yi 0 %}active{% endifequal %}" data-toggle="tab" href="#year_{{ yi }}">{{ yy }} Year</a>
+      <li class="nav-item {% ifequal yi 0 %}active{% endifequal %}">
+        <a class="nav-link" data-toggle="tab" href="#year_{{ yi }}">{{ yy }} Year</a>
       </li>
     {% endfor %}
   </ul>
