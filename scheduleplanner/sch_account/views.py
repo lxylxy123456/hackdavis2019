@@ -27,24 +27,27 @@ class Snap :
 	def redirect(location) :
 		return Http302(location)
 
-def index(request):
+def home(request):
+	if not request.user.is_authenticated() :
+		return Snap.redirect('/login/')
 	dict_render = Snap.record(request)
-	dict_render['a'] = 'q'
 	return Snap.render('home.html', dict_render)
 
 def login(request) :
 	dict_render = Snap.record(request)
+	if request.user.is_authenticated() :
+		return Snap.redirect('/')
 	if request.method == 'POST' :
 		dict_resp = {}
 		username = request.POST['username']
 		password = request.POST['password']
 		user = auth.authenticate(username=username, password=password)
 		if user is None or not user.is_active:
-			return Snap.json({'msg': 'Incorrect username or password'})
+			return Snap.error({'msg': 'Incorrect username or password'})
 		auth.login(request, user)
 		dict_resp['msg'] = 'Login successful'
 		dict_resp['redirect'] = '/'
-		return Snap.json(dict_resp)
+		return Snap.success(dict_resp)
 	else :
 		return Snap.render('login.html', dict_render)
 
@@ -54,15 +57,17 @@ def logout(request) :
 
 def register(request) :
 	dict_render = Snap.record(request)
+	if request.user.is_authenticated() :
+		return Snap.redirect('/')
 	if request.method == 'POST' :
 		username = request.POST['username']
 		password = request.POST['password']
 		if not username or not password :
-			return Snap.json({'msg': 'Please complete form before submitting.'})
+			return Snap.error({'msg':'Please complete form before submitting.'})
 		if password != request.POST['password2'] :
-			return Snap.json({'msg': 'Passwords do not match.'})
+			return Snap.error({'msg': 'Passwords do not match.'})
 		if User.objects.filter(username=username).exists() :
-			return Snap.json({'msg': 'Username already used.'})
+			return Snap.error({'msg': 'Username already used.'})
 		u = User(username=username)
 		u.set_password(password)
 		u.save()
@@ -73,7 +78,7 @@ def register(request) :
 		dict_resp = {}
 		dict_resp['msg'] = 'Register successful'
 		dict_resp['redirect'] = '/'
-		return Snap.json(dict_resp)
+		return Snap.success(dict_resp)
 	else :
 		return Snap.render('register.html', dict_render)
 

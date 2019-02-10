@@ -17,7 +17,10 @@ function csrfSafeMethod(method) {
 	// these HTTP methods do not require CSRF protection
 	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
-function Ajax(url, type, data) {
+function create_banner(type, msg, id) {
+	return ("<p id=\"" + id + "\">" + type + ": " + msg + "</p>")
+}
+function Ajax(url, type, data, banner) {
 	$.ajax({
 		url: url,
 		type: type,
@@ -30,7 +33,9 @@ function Ajax(url, type, data) {
 			}
 		},
 	}).done(function(msg){
-		alert(msg['msg']);
+		id = 'banner-message-' + Date.now()
+		banner.prepend(create_banner(msg['stat'], msg['msg'], id)
+		$("#" + id).fadeOut(3000)
 		if (msg['redirect'])
 			setTimeout("window.location = \"" + msg['redirect'] + "\";", 1000);
 		if (msg['reload'])
