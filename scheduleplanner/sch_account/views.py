@@ -53,6 +53,8 @@ def home(request):
 	else :
 		dict_render = Snap.record(request)
 		print(list(ClassInfo))
+		dict_render['user'] = request.user
+		dict_render['useraccount'] = UserAccount.objects.get(basic_id=request.user.id)
 		dict_render['class_list'] = list(map(lambda x: (x, x[:3] + ' ' + x[3:]), ClassInfo))
 		dict_render['classes'] = ClassInfo
 		dict_render['Y4'] = list(zip(range(4), ['First', 'Second', 'Third', 'Forth']))
