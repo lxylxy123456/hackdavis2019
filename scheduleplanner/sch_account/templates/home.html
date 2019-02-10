@@ -78,7 +78,13 @@ class_list = {{ class_list }};
 classes = {{ classes }};
 
 for (var i = 0; i < class_list.length; i++) {
-	$('#rect_' + class_list[i]).on("hover", function (){alert(1);});
+	$('#rect_' + class_list[i]).on("mouseover", function (){
+		this.style.setProperty("fill", "#00000a")
+	});
+	$('#rect_' + class_list[i]).on("mouseout", function (){
+		this.style.removeProperty('fill')
+	});
+	
 }
 </script>
 
