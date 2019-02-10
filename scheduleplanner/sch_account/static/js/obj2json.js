@@ -17,3 +17,24 @@ function csrfSafeMethod(method) {
 	// these HTTP methods do not require CSRF protection
 	return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
+function Ajax(url, type, data) {
+	$.ajax({
+		url: url,
+		type: type,
+		data: data,
+		dataType: "json",
+		beforeSend: function(xhr, settings) {
+			var csrftoken = getCookie('csrftoken');
+			if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+				xhr.setRequestHeader("X-CSRFToken", csrftoken);
+			}
+		},
+	}).done(function(msg){
+		alert(msg['message']);
+		if (msg['redirect'])
+			setTimeout("window.location = \"" + msg['redirect'] + "\";", 1000);
+		if (msg['reload'])
+			setTimeout("window.location.reload()", 1000);
+	});
+}
+
