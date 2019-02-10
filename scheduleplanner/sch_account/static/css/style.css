@@ -11,9 +11,9 @@ section.intro{
   margin: 0;
   margin-top: 0px !important;
   max-width: none;
-  background-image: "static/img/background.png"
+  background-image: "/static/img/background.png"
   height: 100vh;
-    background:url("static/img/background.png");
+    background:url("/static/img/background.png");
   &:nth-of-type(2n) {
     background-color: #373B44;
   }
