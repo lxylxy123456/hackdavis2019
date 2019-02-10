@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'bmmp88q0stawx^i14--h_-l^b#w00rmmv402=65i5v@orr8e^z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if 'SERVER' in socket.gethostname() :
+	DEBUG = False
+else :
+	DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['savemyschedule.tk.', 'www.savemyschedule.tk.']
 
 
 # Application definition
