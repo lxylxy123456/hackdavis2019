@@ -55,6 +55,14 @@ def home(request):
 		print(list(ClassInfo))
 		dict_render['user'] = request.user
 		dict_render['useraccount'] = UserAccount.objects.get(basic_id=request.user.id)
+		dict_render['year'] = {
+			1: 'Freshman', 
+			2: 'Sophomore', 
+			3: 'Junior', 
+			4: 'Senior', 
+			5: 'Super Senior', 
+			6: 'Super Senior', 
+		}.get(UserAccount.objects.get(basic_id=request.user.id).year], str(UserAccount.objects.get(basic_id=request.user.id).year]))
 		dict_render['class_list'] = list(map(lambda x: (x, x[:3] + ' ' + x[3:]), ClassInfo))
 		dict_render['classes'] = ClassInfo
 		dict_render['Y4'] = list(zip(range(4), ['First', 'Second', 'Third', 'Forth']))
