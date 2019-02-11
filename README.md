@@ -12,6 +12,7 @@
 * `pip3 install django\<2`
 * `git clone https://github.com/lxylxy123456/hackdavis2019/`
 * `cd hackdavis2019/scheduleplanner/`
+* `python3 manage.py migrate`
 * `python3 manage.py runserver`
 * Access `http://127.0.0.1:8000/`
 * Arguments for runserver: see [Django documentation](https://docs.djangoproject.com/en/2.1/ref/django-admin/#runserver)
